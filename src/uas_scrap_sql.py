@@ -27,7 +27,7 @@ class DBUASScrap:
     def insert_asset(self, asset, publisher_id, rating_id, category_id):
         cursor = self.conn.cursor()
         sql = "INSERT INTO " \
-              "Asset (idPublisher, name, mainImage, price, originPrice, idRating, idPublisher, id_Category)" \
+              "Asset (idAsset, name, mainImage, price, originPrice, idRating, idPublisher, idCategory)" \
               " VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         val = (asset["idAsset"], asset["name"], asset["mainImage"],
                asset["price"], asset["originPrice"], rating_id, publisher_id, category_id)

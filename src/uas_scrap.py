@@ -26,20 +26,23 @@ class UASScrap:
                 self.db_conn.insert_category(m)
             self.db_conn.commit()
 
-    def add_publisher(self, publisher):
+    def get_or_add_publisher(self, publisher):
         res = self.db_conn.get_publisher(publisher["publisherId"])
 
         if len(res) == 0:
             last_id = self.db_conn.insert_publisher(publisher)
             self.db_conn.commit()
             return last_id
+        else:
+            return res[0][0]
+
 
     def add_rating(self, rating):
         last_id = self.db_conn.insert_rating(rating)
         self.db_conn.commit()
         return last_id
 
-    def add_asset(self, asset, id_publisher, id_rating, id_category):
+    def get_or_add_asset(self, asset, id_publisher, id_rating, id_category):
         last_id = self.db_conn.insert_asset(asset, id_publisher, id_rating, id_category)
         self.db_conn.commit()
         return last_id
@@ -78,7 +81,7 @@ class UASScrap:
                 "average": json_product[key]["rating"]["average"],
                 "count": json_product[key]["rating"]["count"]
             }
-            last_id_publisher = self.add_publisher(publisher)
+            last_id_publisher = self.get_or_add_publisher(publisher)
             last_id_rating = self.add_rating(rating)
 
             asset = {
