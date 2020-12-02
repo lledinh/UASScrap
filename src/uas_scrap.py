@@ -36,7 +36,6 @@ class UASScrap:
         else:
             return res[0][0]
 
-
     def add_rating(self, rating):
         last_id = self.db_conn.insert_rating(rating)
         self.db_conn.commit()
@@ -90,7 +89,7 @@ class UASScrap:
                 "originPrice": json_product[key]["price"]["originPrice"]
             }
 
-            self.add_asset(asset, last_id_publisher, last_id_rating, 0)
+            self.get_or_add_asset(asset, last_id_publisher, last_id_rating, 0)
 
         menu = []
         self.get_categories(sjson["data"]["filter"]["defaults"]['category']['options'], menu)
